@@ -18,6 +18,11 @@ stored_value = []
 default_headers = {"Access-Control-Allow-Origin": "*", "content-type": "application/json"}
 
 
+@app.route("/v1/shoppinglists/open", methods=["OPTIONS"])
+def get_open_lists_options():
+    return Response(status=200, headers=default_headers)
+
+
 @app.route("/v1/shoppinglists/open", methods=["GET"])
 def get_open_lists():
     if is_authenticated():
@@ -37,6 +42,11 @@ def post_open_lists():
         return Response(status=201, headers=default_headers)
     else:
         return Response(status=401, headers=default_headers)
+
+
+@app.route("/v1/system/ready", methods=["OPTIONS"])
+def check_readiness_options():
+    return Response(status=200, headers=default_headers)
 
 
 @app.route("/v1/system/ready", methods=["GET"])
