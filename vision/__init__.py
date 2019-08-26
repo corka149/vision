@@ -3,7 +3,7 @@ import json
 import logging as log
 from math import floor
 from random import Random
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_from_directory
 
 
 app = Flask(__name__)
@@ -44,18 +44,14 @@ def post_open_lists():
         return Response(status=401, headers=default_headers)
 
 
-@app.route("/v1/system/ready", methods=["OPTIONS"])
-def check_readiness_options():
-    return Response(status=200, headers=default_headers)
+@app.route("/")
+def index():
+    return send_from_directory("www", "index.html")
 
 
-@app.route("/v1/system/ready", methods=["GET"])
-def check_readiness():
-    if is_authenticated():
-        log.info("Readiness was checked")
-        return Response("jARVIS is ready", status=200, headers=default_headers)
-    else:
-        return Response(status=401, headers=default_headers)
+@app.route("/<path:path>")
+def send_static(path):
+    return send_from_directory("www", path)
 
 
 def get_credentials():
