@@ -1,3 +1,3 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-gunicorn vision:app
+gunicorn vision:app --bind=0.0.0.0:8000
